@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Manual Transfer</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
+    .field { margin-bottom: 1rem; }
+    label { font-weight: bold; display: block; margin-bottom: 0.3rem; }
+    input { width: 100%; padding: 0.5rem; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Manual Transfer Details</h1>
+  <div class="field">
+    <label for="routing">Routing Number</label>
+    <input id="routing" readonly>
+  </div>
+  <div class="field">
+    <label for="account">Account Number</label>
+    <input id="account" readonly>
+  </div>
+  <div class="field">
+    <label for="amount">Amount</label>
+    <input id="amount" readonly>
+  </div>
+  <div class="field">
+    <label for="source">Source Hash</label>
+    <input id="source" readonly>
+  </div>
+
+  <script>
+    fetch('transfer_queue.json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('routing').value = data.routing_number;
+        document.getElementById('account').value = data.account_number;
+        document.getElementById('amount').value = data.amount;
+        document.getElementById('source').value = data.source_hash;
+      })
+      .catch(err => alert("Failed to load transfer data: " + err));
+  </script>
+</body>
+</html>
+
